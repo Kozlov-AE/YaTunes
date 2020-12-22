@@ -1,22 +1,25 @@
+//Подключаем модули js
 import { musicPlayerInit } from './musicPlayer.js'
 import { radioPlayerInit } from './radioPlayer.js'
 import { videoPlayerInit } from './videoPlayer.js'
 
+//Определяем модули страницы в js коде
 const playerBtn = document.querySelectorAll('.player-btn');
 const playerBlock = document.querySelectorAll('.player-block');
 const temp = document.querySelector('.temp');
 
-const deactivationPlayer = () => {
-    temp.style.display = 'none'
-    playerBtn.forEach (item => item.classList.remove('active'));
-    playerBlock.forEach (item => item.classList.remove('active'));
-};
+//Деактивируем вкладки плееров и убираем сами плееры
+const DeactiveBlock = () => {
+    playerBtn.forEach(item => item.classList.remove('active'));
+    playerBlock.forEach(item => item.classList.remove('active'));
+    }
 
-
-playerBtn.forEach((btn, i) => btn.addEventListener('click', () => {
-    deactivationPlayer();
-    btn.classList.add('active');
-    playerBlock[i].classList.add('active');
+//Перемещение по вкладкам плееров
+    playerBtn.forEach((btn, i) => btn.addEventListener('click', () => {
+    temp.style.display = 'none'//Скрываем название сайта при активации вкладок
+    DeactiveBlock();//Деактивируем все вкладки
+    btn.classList.add('active');//Активируем выбранную вкладку
+    playerBlock[i].classList.add('active');//Активируем требуемый плеер
 }));
 
 musicPlayerInit();
