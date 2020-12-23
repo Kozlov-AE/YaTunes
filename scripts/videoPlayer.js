@@ -6,6 +6,13 @@ export const videoPlayerInit = () => {
     const videoProgress = document.querySelector('.video-progress');
     const videoTimePassed = document.querySelector('.video-time__passed');
     const videoTimeTotal = document.querySelector('.video-time__total');
+    const videoVolume = document.querySelector('.video-volume');
+    const videoButtonFullscreen = document.querySelector('.video-button__fullscreen');
+    const videoIconDown = document.querySelector('.video-icon__down');
+    const videoIconUp = document.querySelector('.video-icon__up');
+
+    // Буфер для запоминания звука до изменения
+    let oldVolume;
 
     //Метод смены стиля кнопки
     const toggleIcon = () => {
@@ -36,19 +43,34 @@ export const videoPlayerInit = () => {
     //Добавление нуля перед цифрой
     const addZero = n => n < 10 ? '0' + n : n;
 
+    //Изменить громкость в видео
+    const changeVolume = () => {
+        //const valueVolume = videoVolume.value;
+        videoPlayer.volume = videoVolume.value / 100;
+    }
 
-    //#region Подписки на события
+    //изменить стиль иконок уровня громкости
+    const changeVolumeIcons = () => {
+        if (videoPlayer.volume == 0 || videoPlayer.muted == true) {
+            videoIconDown.classList.remove('fa-volume-down');
+            videoIconDown.classList.add('fa-volume-off');
+        } else {
+            videoIconDown.classList.add('fa-volume-down');
+            videoIconDown.classList.remove('fa-volume-off');
+        }
+    }
 
-    //Клик по кнопке play
-    videoButtonPlay.addEventListener('click', togglePlay);
+//#region Подписки на события
+
     //Клик по самому плееру
     videoPlayer.addEventListener('click', togglePlay);
+
     //Обработка события начала воспроизведения плеером
     videoPlayer.addEventListener('play', toggleIcon);
+
     //Обработка события остановки воспроизведения
     videoPlayer.addEventListener('pause', toggleIcon);
-    //Клик по кнопке Стоп
-    videoButtonStop.addEventListener('click', stopPlay);
+
     //Обработка события изменения времени прогресса видео 
     videoPlayer.addEventListener('timeupdate', () => {
         const currentTime = videoPlayer.currentTime;
@@ -66,12 +88,56 @@ export const videoPlayerInit = () => {
         videoTimeTotal.textContent = `${addZero(minuteTotal)}:${addZero(secondsTotal)}`;
     });
 
-    videoProgress.addEventListener('change', () => {
+    //Обработка события изменения уровня громкости в видео
+    videoPlayer.addEventListener('volumechange', () => {
+        videoVolume.value = videoPlayer.volume * 100;
+        changeVolumeIcons();
+    });
+
+    //Клик по кнопке play
+    videoButtonPlay.addEventListener('click', togglePlay);
+
+    //Клик по кнопке Стоп
+    videoButtonStop.addEventListener('click', stopPlay);
+
+    //Изменение ползунка звука
+    videoVolume.addEventListener('input', changeVolume);
+
+    changeVolume();
+    //Изменение ползунка прогресса видео
+    videoProgress.addEventListener('input', () => {
         const duration = videoPlayer.duration;
         const value = videoProgress.value;
 
         videoPlayer.currentTime = (value * duration) / 100;
     });
+
+    //Нажатие на кнопку развернуть во весь экран
+    videoButtonFullscreen.addEventListener('click',
+        () => {
+            videoPlayer.requestFullscreen();
+        });
+
+    //Нажатие на иконку уменьшения звука
+    videoIconDown.addEventListener('click', () => {
+        if (videoPlayer.muted == true) {
+            videoPlayer.muted = false;
+        } else {
+            videoPlayer.muted = true;
+        }
+    });
+
+    //Нажатие на иконку увеличения звука
+    videoIconUp.addEventListener('click',
+        () => {
+            if (videoPlayer.volume == 1) {
+                videoPlayer.volume = oldVolume;
+            } else {
+                oldVolume = videoPlayer.volume;
+                videoPlayer.volume = 1;
+            }
+        });
+
     //#endregion
 
 }
