@@ -138,6 +138,13 @@ export const videoPlayerInit = () => {
             }
         });
 
+        videoPlayer.addEventListener('fullscreenchange', () => {
+            if(document.fullscreen){
+                videoPlayer.controls = true;
+            } else {
+                videoPlayer.controls = false;
+            }
+        })
     //#endregion
 
 }
