@@ -13,6 +13,13 @@ export const musicPlayerInit = () => {
     const audioTimeTotal = document.querySelector('.audio-time__total');
     const audioNavigation = document.querySelector('.audio-navigation');
     const audioProgress = document.querySelector('.audio-progress');
+    const radioIconDown = document.querySelector('.radio-icon__down');
+    const radioVolume = document.querySelector('.radio-volume');
+    const radioIconUp = document.querySelector('.radio-icon__up');
+    
+
+
+
 
     const playlist = ['hello', 'flow', 'speed'];
 
@@ -146,6 +153,10 @@ export const musicPlayerInit = () => {
         let allWidth = audioProgress.clientWidth;
         let progress = (x / allWidth) * audioPlayer.duration;
         audioPlayer.currentTime = progress;
+     });
+
+     radioVolume.addEventListener('input', () => {
+         audio.volume = radioVolume.nodeValue / 100;
      });
 
 
