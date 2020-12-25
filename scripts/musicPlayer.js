@@ -13,13 +13,7 @@ export const musicPlayerInit = () => {
     const audioTimeTotal = document.querySelector('.audio-time__total');
     const audioNavigation = document.querySelector('.audio-navigation');
     const audioProgress = document.querySelector('.audio-progress');
-    const radioIconDown = document.querySelector('.radio-icon__down');
-    const radioVolume = document.querySelector('.radio-volume');
-    const radioIconUp = document.querySelector('.radio-icon__up');
     
-
-
-
 
     const playlist = ['hello', 'flow', 'speed'];
 
@@ -93,19 +87,6 @@ export const musicPlayerInit = () => {
         audioHeader.textContent = currentTrack.toUpperCase();
     }
 
-    // const getNormalTime = secs => {
-    //     let hours = Math.floor(secs / 600);
-    //     let minutes = Math.floor(secs / 60);
-    //     let seconds = Math.floor(secs % 60);
-
-    //     hours = hours > 10 ? `${hours}` : `0${hours}`
-    //     minutes = minutes > 10 ? `${minutes}` : `0${minutes}`
-    //     seconds = seconds > 10 ? `${seconds}` : `0${seconds}`
-
-    //     let result = hours === '00' ? `${minutes} : ${seconds}` : `${hours} : ${minutes} : ${seconds}`;
-    //     return result;
-    // }
-
     audioPlayer.addEventListener('ended', () => {
         audioPlayerNextMethod();
         audioPlayerPlayPauseMethod();
@@ -155,16 +136,9 @@ export const musicPlayerInit = () => {
         audioPlayer.currentTime = progress;
      });
 
-     radioVolume.addEventListener('input', () => {
-         audio.volume = radioVolume.nodeValue / 100;
-     });
-
-
-
-
-
-
-
+     musicPlayerInit.stop = () => {
+        audioPlayer.pause();
+     }
 
 
 }
