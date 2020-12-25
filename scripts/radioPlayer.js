@@ -5,9 +5,15 @@ export const radioPlayerInit = () => {
     const radioItem = document.querySelectorAll('.radio-item');
     const radioHeader = document.querySelector('.radio-header__big');
     const radioStop = document.querySelector('.radio-stop');
+    const radioIconDown = document.querySelector('.radio-icon__down');
+    const radioVolume = document.querySelector('.radio-volume');
+    const radioIconUp = document.querySelector('.radio-icon__up');
+
+
     //подключили аудио плагин браузера
     const audio = new Audio();
     audio.type = 'audio/aac'; //Формат аудио
+    radioVolume.value = audio.volume * 100;
 
     //По умолчанию кнопка не активна, нужно выбрать станцию
     radioStop.disabled = true;
@@ -59,6 +65,20 @@ export const radioPlayerInit = () => {
         } else {
             audio.pause();
         }
+    })
+
+    radioVolume.addEventListener('input', () => {
+        audio.muted = false;
+        audio.volume = radioVolume.value / 100;
+    });
+
+    radioIconDown.addEventListener('click', () => {
+        audio.muted = !audio.muted;
+        // if(!audio.muted){
+        //     audio.muted = true;
+        // } else {
+        //     audio.muted = true;
+        // }
     })
 
 }
