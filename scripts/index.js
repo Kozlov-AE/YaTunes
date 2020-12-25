@@ -12,15 +12,24 @@ const temp = document.querySelector('.temp');
 const DeactiveBlock = () => {
     playerBtn.forEach(item => item.classList.remove('active'));
     playerBlock.forEach(item => item.classList.remove('active'));
-    }
+}
 
 //Перемещение по вкладкам плееров
-    playerBtn.forEach((btn, i) => btn.addEventListener('click', () => {
-    temp.style.display = 'none'//Скрываем название сайта при активации вкладок
-    DeactiveBlock();//Деактивируем все вкладки
+playerBtn.forEach((btn, i) => btn.addEventListener('click', () => {
+    deactivationPlayers();
+    //temp.style.display = 'none'//Скрываем название сайта при активации вкладок
+    //DeactiveBlock();//Деактивируем все вкладки
     btn.classList.add('active');//Активируем выбранную вкладку
     playerBlock[i].classList.add('active');//Активируем требуемый плеер
 }));
+
+const deactivationPlayers = () => {
+    temp.style.display = 'none';
+    DeactiveBlock();
+    musicPlayerInit.stop();
+    radioPlayerInit.stop();
+    videoPlayerInit.stop();
+}
 
 musicPlayerInit();
 radioPlayerInit();

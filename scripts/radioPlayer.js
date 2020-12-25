@@ -7,7 +7,6 @@ export const radioPlayerInit = () => {
     const radioStop = document.querySelector('.radio-stop');
     const radioIconDown = document.querySelector('.radio-icon__down');
     const radioVolume = document.querySelector('.radio-volume');
-    const radioIconUp = document.querySelector('.radio-icon__up');
 
 
     //подключили аудио плагин браузера
@@ -65,20 +64,21 @@ export const radioPlayerInit = () => {
         } else {
             audio.pause();
         }
-    })
+    });
 
+    //Изменение ползунка громкости
     radioVolume.addEventListener('input', () => {
         audio.muted = false;
         audio.volume = radioVolume.value / 100;
     });
 
+    //Режим беззвука
     radioIconDown.addEventListener('click', () => {
         audio.muted = !audio.muted;
-        // if(!audio.muted){
-        //     audio.muted = true;
-        // } else {
-        //     audio.muted = true;
-        // }
-    })
+    });
+
+    radioPlayerInit.stop = () => {
+        audio.pause();
+    }
 
 }

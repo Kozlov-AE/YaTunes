@@ -147,4 +147,9 @@ export const videoPlayerInit = () => {
         })
     //#endregion
 
+    videoPlayerInit.stop = () => {
+        videoPlayer.pause();
+     }
+
+
 }
